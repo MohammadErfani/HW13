@@ -1,0 +1,26 @@
+CREATE DATABASE store;
+USE store;
+CREATE TABLE branch (
+  id INT NOT NULL AUTO_INCREMENT ,
+  name varchar(100) NOT NULL ,
+  establishment DATE NULL,
+  city VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
+);
+CREATE TABLE department(
+    id INT NOT NULL AUTO_INCREMENT,
+    name varchar (100) NOT NULL ,
+    duty text null,
+    branceId int,
+    PRIMARY KEY (id),
+    FOREIGN KEY (branceId) REFERENCES branch(id)
+);
+CREATE TABLE employee(
+    id INT NOT NULL AUTO_INCREMENT,
+    name varchar (200) NOT NULL,
+    age int not null,
+    salary bigint not null,
+    departmentId int,
+    PRIMARY KEY (id),
+    FOREIGN KEY (departmentId) REFERENCES department(id)
+);

@@ -1,0 +1,53 @@
+#  نام کارمندانی که حقوقشان کمتر از ۱۰۰۰ است
+SELECT name FROM employee WHERE salary < 1000;
+
+# نام کارمندان همراه نام واحد اداریشان
+SELECT employee.name , department.name from employee join department on employee.departmentId = department.id;
+
+# میانگین حقوق کارمندان هر واجد
+SELECT department.name ,avg(employee.salary) from department
+left join employee on department.id = employee.departmentId
+group by department.id;
+# اگر شعبه ها را کلی در نظر بگیریم مثلا فروش هم در تهران هم در اصفهان آنوقت group by department.name باید میگذاشتیم
+
+
+# نام واخد های اداری شعبه اصفهان
+SELECT department.name from department join branch on department.branceId = branch.id
+where branch.city like "اصفهان";
+
+#نام شعبه ها به همراه تعداد واحد های هر کدام
+select branch.name,count(department.id)
+from department
+right join branch on department.branceId = branch.id
+group by branch.name;
+
+# نام کارمندان به همراه نام شعبه ایشان
+SELECT employee.name,branch.name from employee
+join department on employee.departmentId = department.id
+join branch on department.branceId = branch.id;
+# میانگین خقوق کارمندان شعبه اصفهان
+select avg(employee.salary) from employee
+join department on employee.departmentId = department.id
+join branch on department.branceId = branch.id
+where branch.city like "اصفهان";
+# نام شعبه ها به همراه تعداد کارمندان هر کدام
+select branch.name,count(employee.id)
+from employee
+right join department on employee.departmentId = department.id
+right join branch on department.branceId = branch.id
+group by branch.name;
+
+
+#  نام واجد های اداری شعبه اصفهان به همراه تعداد کارمندان هر واحد
+select department.name,count(employee.id) from employee
+right join department on employee.departmentId = department.id
+right join branch on department.branceId = branch.id
+where branch.city like "اصفهان"
+group by department.name;
+# نام شعبانی که تعداد کارمندان آن ها کمتر از ۱۰ نفر است
+select branch.name
+from employee
+right join department on employee.departmentId = department.id
+right join branch on department.branceId = branch.id
+group by branch.name
+having count(employee.id)<10;
